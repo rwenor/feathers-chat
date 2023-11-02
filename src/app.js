@@ -5,13 +5,20 @@ import { koa, rest, bodyParser, errorHandler, parseAuthentication, cors, serveSt
 import socketio from '@feathersjs/socketio'
 
 import { configurationValidator } from './configuration.js'
+
 import { logError } from './hooks/log-error.js'
+import { logRuntime } from './hooks/log-runtime.js'
+
+
+
 import { sqlite } from './sqlite.js'
 
 import { authentication } from './authentication.js'
 
 import { services } from './services/index.js'
 import { channels } from './channels.js'
+
+
 
 const app = koa(feathers())
 
@@ -44,7 +51,10 @@ app.configure(channels)
 // Register hooks that run on all service methods
 app.hooks({
   around: {
-    all: [logError]
+    all: [
+      logRuntime,
+      logError
+    ]
   },
   before: {},
   after: {},
