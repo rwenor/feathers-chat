@@ -17,7 +17,9 @@ export const userSchema = Type.Object(
   { $id: 'User', additionalProperties: false }
 )
 export const userValidator = getValidator(userSchema, dataValidator)
-export const userResolver = resolve({})
+export const userResolver = resolve({
+  test: async (value, user) => 'Testign ok: '+ user.email
+})
 
 export const userExternalResolver = resolve({
   // The password should never be visible externally
